@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Clip Keeper
+Comment=Private clipboard history in the top bar (Super+V to search)
+Exec=clip-keeper-tray
+Icon=edit-paste
+Terminal=false
+Categories=Utility;
+X-GNOME-Autostart-enabled=true

@@ -1,0 +1,16 @@
+Package: clip-keeper
+Version: @VERSION@
+Architecture: all
+Maintainer: Arvind <arvindkumarsjpr@gmail.com>
+Section: utils
+Priority: optional
+Depends: python3 (>= 3.10), python3-gi, gir1.2-gtk-3.0, gir1.2-ayatanaappindicator3-0.1, python3-cryptography, gir1.2-secret-1
+Recommends: gnome-shell-extension-appindicator
+Description: private clipboard history for the GNOME top bar (copycat-compatible)
+ Records what you copy (skipping password-manager secrets and anything that
+ looks like a token or password), shows the latest clips in the top bar and
+ opens a fuzzy-search popup on Super+V. Works on Wayland without a GNOME Shell
+ extension, so GNOME upgrades do not break it. The history uses copycat's
+ database format and location. Optional: full-text search, snippets on
+ Super+Alt+3…9, paste transformed or edited, multi-select, file and rich-text
+ copies, auto-expiry, and encryption at rest with the key in GNOME Keyring.

@@ -1,0 +1,19 @@
+[Unit]
+Description=Clipboard history in the top bar (clip-keeper)
+Documentation=file:///usr/share/doc/clip-keeper/README.md
+# A top-bar app: lives and dies with the desktop session.
+PartOf=graphical-session.target
+After=graphical-session.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/clip-keeper-tray
+Environment=PYTHONUNBUFFERED=1
+# Crashes restart it; "Quit" in its menu exits cleanly and is respected until the next login.
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target

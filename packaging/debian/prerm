@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+if [ "$1" = "remove" ]; then
+    # Give Super+V back to GNOME for every user who bound it (their session bus is needed).
+    getent passwd | while IFS=: read -r user _ uid _ _ home _; do
+        [ "$uid" -ge 1000 ] 2>/dev/null || continue
+        if grep -qs '"saved_tray_shortcut": "[^"]' "$home/.config/clip-keeper/settings.json"; then
+            timeout 20 runuser -u "$user" -- env HOME="$home" DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus" \
+                /usr/bin/clip-keeper unbind-shortcut </dev/null >/dev/null 2>&1 \
+                && echo "clip-keeper: restored Super+V for $user" \
+                || echo "clip-keeper: run 'clip-keeper unbind-shortcut' as $user to restore Super+V"
+        fi
+    done
+    systemctl --global disable clip-keeper.service >/dev/null 2>&1 || true
+    pkill -f '^/usr/bin/python3 -I /usr/bin/clip-keeper-tray' >/dev/null 2>&1 || true
+fi
+exit 0

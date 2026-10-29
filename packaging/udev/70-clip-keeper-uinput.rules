@@ -1,0 +1,4 @@
+# clip-keeper: let the logged-in desktop user create a virtual keyboard, so choosing a clip
+# can press Ctrl+V for them. "uaccess" grants access only to the user of the active local
+# session (systemd-logind), not to other users or remote logins.
+KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"

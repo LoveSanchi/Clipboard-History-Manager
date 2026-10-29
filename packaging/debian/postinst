@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+if [ "$1" = "configure" ]; then
+    python3 -m compileall -q /usr/lib/clip-keeper >/dev/null 2>&1 || true
+    # Virtual keyboard for auto-paste: load uinput and apply the uaccess rule now.
+    modprobe uinput >/dev/null 2>&1 || true
+    udevadm control --reload-rules >/dev/null 2>&1 || true
+    udevadm trigger --sysname-match=uinput >/dev/null 2>&1 || true
+    # Start with every desktop session, restarted if it ever crashes (systemd user service).
+    systemctl --global enable clip-keeper.service >/dev/null 2>&1 || true
+    echo "clip-keeper: as your user, run:"
+    echo "  systemctl --user daemon-reload && systemctl --user restart clip-keeper   # start recording now"
+    echo "  clip-keeper bind-shortcut       # Super+V, Super+Alt+1/2 and snippets on Super+Alt+3…9"
+    echo "  (upgrading from 0.3 or earlier? first: pkill -f clip-keeper-tray)"
+fi
+exit 0

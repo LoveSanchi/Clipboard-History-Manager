@@ -1,0 +1,7 @@
+#!/usr/bin/python3 -I
+import sys
+
+sys.path.insert(0, "/usr/lib/clip-keeper")
+from clip_keeper.cli import main  # noqa: E402
+
+sys.exit(main())
